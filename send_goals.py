@@ -44,6 +44,7 @@ if __name__ == '__main__':
             for j in range(25):
                 if x>0.7 and x<9.34 and y>0.7 and y<9.34 :
                     result = movebase_client(x, y)
+                    print (x,y)
                     if result:
                         rospy.loginfo("Goal execution done!")
                 x = x - 0.4
