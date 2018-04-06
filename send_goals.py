@@ -5,7 +5,7 @@ import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
-def movebase_client(x, y):
+def movebase_client(x, y,w,z):
 
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
     client.wait_for_server()
@@ -15,7 +15,8 @@ def movebase_client(x, y):
     goal.target_pose.header.stamp = rospy.Time.now()
     goal.target_pose.pose.position.x = x
     goal.target_pose.pose.position.y = y	
-    goal.target_pose.pose.orientation.w = 1.0
+    goal.target_pose.pose.orientation.w = w
+    goal.target_pose.pose.orientation.z = z
 
     client.send_goal(goal)
     wait = client.wait_for_result()
@@ -35,7 +36,7 @@ if __name__ == '__main__':
         for i in range(12):
             for j in range(25):
                 if x > 0.7 and x < 9.34 and y > 0.7 and y < 9.34 :
-                    result = movebase_client(x, y)
+                    result = movebase_client(x, y,1.0,0.0)
                     print (x,y)
                     if result:
                         rospy.loginfo("Goal execution done!")
@@ -43,7 +44,7 @@ if __name__ == '__main__':
             y = y+0.4
             for j in range(25):
                 if x>0.7 and x<9.34 and y>0.7 and y<9.34 :
-                    result = movebase_client(x, y)
+                    result = movebase_client(x, y,0.0,1.0)
                     print (x,y)
                     if result:
                         rospy.loginfo("Goal execution done!")
