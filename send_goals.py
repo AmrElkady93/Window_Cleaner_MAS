@@ -33,9 +33,18 @@ if __name__ == '__main__':
         rospy.init_node('movebase_client_py')
         x = 0.9
         y = 0.9
+
+	obstacles_x = [2.00, 2.00, 6.00, 6.00]	
+	obstacles_y = [3.00, 6.26, 3.00, 6.26]
+
         for i in range(12):
             for j in range(25):
-                if x > 0.7 and x < 9.34 and y > 0.7 and y < 9.34 :
+		isObstacle = False
+		for k in range(4):
+			if x - obstacles_x[k] > 0 and x - obstacles_x[k] < 1.8 and y - obstacles_y[k] > 0 and y - obstacles_y[k] < 1.8 :
+				isObstacle = True
+				break
+                if x > 0.7 and x < 9.34 and y > 0.7 and y < 9.34 and (not isObstacle):
                     result = movebase_client(x, y,1.0,0.0)
                     print (x,y)
                     if result:
@@ -43,7 +52,12 @@ if __name__ == '__main__':
                 x = x+0.4
             y = y+0.4
             for j in range(25):
-                if x>0.7 and x<9.34 and y>0.7 and y<9.34 :
+		isObstacle = False
+		for k in range(4):
+			if x - obstacles_x[k] > 0 and x - obstacles_x[k] < 1.8 and y - obstacles_y[k] > 0 and y - obstacles_y[k] < 1.8 :
+				isObstacle = True
+				break
+                if x > 0.7 and x < 9.34 and y > 0.7 and y < 9.34 and (not isObstacle):
                     result = movebase_client(x, y,0.0,1.0)
                     print (x,y)
                     if result:
